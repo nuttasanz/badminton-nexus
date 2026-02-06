@@ -27,14 +27,12 @@ export class UsersController {
 
   @Get(':id')
   findOne(@Param('id') id: string) {
-    return this.usersService.findOne(+id);
+    return this.usersService.findOne(id);
   }
 
-  @Post('seed')
-  async seed(@Body() seedDto: any) {
-    console.log(seedDto);
-    const { count } = seedDto;
-    return this.usersService.seedUsers(count as number);
+  @Post('seed/:count')
+  async seed(@Param('count') count: number) {
+    return this.usersService.seedUsers(count);
   }
 
   @Patch(':id')
