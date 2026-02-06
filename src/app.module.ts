@@ -1,10 +1,10 @@
 import { Module } from '@nestjs/common';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
-import { CatsModule } from './cats/cats.module';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { UsersModule } from './users/users.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
+import { AuthModule } from './auth/auth.module';
 
 @Module({
   imports: [
@@ -23,11 +23,11 @@ import { TypeOrmModule } from '@nestjs/typeorm';
         password: config.get<string>('DB_PASSWORD'),
         database: config.get<string>('DB_NAME'),
         autoLoadEntities: true, // โหลด Entity อัตโนมัติจาก Module
-        synchronize: false, // **คำเตือน** ห้ามเป็น true ถ้ามี Table ใน DB อยู่แล้ว
+        synchronize: true, // **คำเตือน** ห้ามเป็น true ถ้ามี Table ใน DB อยู่แล้ว
       }),
     }),
-    CatsModule,
     UsersModule,
+    AuthModule,
   ],
   controllers: [AppController],
   providers: [AppService],
