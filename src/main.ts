@@ -1,3 +1,4 @@
+/* eslint-disable */
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
 import { Logger } from '@nestjs/common';
@@ -8,12 +9,7 @@ async function bootstrap() {
   await app.listen(process.env.PORT ?? 3000);
   const url = await app.getUrl();
   logger.log(`Application is running on: ${url}`);
+  console.log('env:', process.env.NODE_ENV);
 }
-bootstrap()
-  .then((res) => {
-    console.log(res);
-    console.log(process.env.NODE_ENV);
-  })
-  .catch((err) => {
-    console.error(err);
-  });
+
+bootstrap();
