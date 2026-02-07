@@ -9,14 +9,14 @@ import {
 export class CustomValidationPipe extends ValidationPipe {
   constructor() {
     super({
-      stopAtFirstError: true,
+      stopAtFirstError: false,
       exceptionFactory: (errors: ValidationError[]) => {
         const formattedErrors = errors.reduce(
           (acc, error) => {
-            acc[error.property] = error?.constraints?.isNotEmpty || '';
+            acc[error.property] = error?.constraints || {};
             return acc;
           },
-          {} as Record<string, string>,
+          {} as Record<string, object>,
         );
 
         return new BadRequestException({
