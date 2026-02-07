@@ -23,7 +23,7 @@ import { AuthModule } from './auth/auth.module';
         password: config.get<string>('DB_PASSWORD'),
         database: config.get<string>('DB_NAME'),
         autoLoadEntities: true, // โหลด Entity อัตโนมัติจาก Module
-        synchronize: true, // **คำเตือน** ห้ามเป็น true ถ้ามี Table ใน DB อยู่แล้ว
+        synchronize: false, // **คำเตือน** ห้ามเป็น true ถ้ามี Table ใน DB อยู่แล้ว
       }),
     }),
     UsersModule,
