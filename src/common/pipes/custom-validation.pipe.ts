@@ -9,7 +9,10 @@ import {
 export class CustomValidationPipe extends ValidationPipe {
   constructor() {
     super({
-      stopAtFirstError: false,
+      whitelist: true, // ตัดตัวแปรที่ไม่ได้นิยามใน DTO ออก
+      forbidNonWhitelisted: true, // ถ้าส่งตัวแปรแปลกปลอมมา ให้ Error ทันที
+      transform: true, // แปลง Type ของข้อมูลให้อัตโนมัติ
+      stopAtFirstError: false, // ปิด error ตัวแรก
       exceptionFactory: (errors: ValidationError[]) => {
         const formattedErrors = errors.reduce(
           (acc, error) => {
