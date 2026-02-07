@@ -5,10 +5,10 @@ export const AppDataSource = new DataSource({
   type: 'postgres',
   host: 'localhost',
   port: 5432,
-  username: 'admin', // เช็คให้ตรงกับ docker-compose
-  password: 'password123', // เช็คให้ตรงกับ docker-compose
+  username: 'admin',
+  password: 'password123',
   database: 'badminton_db',
   entities: [User],
-  migrations: ['dist/db/migrations/*.js'], // ชี้ไปที่ไฟล์ที่ compile แล้ว
-  synchronize: false, // มือโปรต้อง false แล้วใช้ Migration เท่านั้น
+  migrations: ['dist/db/migrations/*.ts'],
+  synchronize: false,
 });

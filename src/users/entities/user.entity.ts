@@ -12,31 +12,31 @@ export class User {
   @PrimaryGeneratedColumn('uuid')
   id: string;
 
-  @Column()
+  @Column({ name: 'first_name', nullable: true })
   firstName: string;
 
-  @Column()
+  @Column({ name: 'last_name', nullable: true })
   lastName: string;
 
-  @Column()
+  @Column({ name: 'display_name', nullable: true })
   displayName: string;
 
-  @Column({ unique: true, nullable: false })
+  @Column({ unique: true })
   username: string;
 
   @Column({ unique: true })
   email: string;
 
-  @Column()
+  @Column({ name: 'phone_number', nullable: true })
   phoneNumber: string;
 
-  @Column({ nullable: false, select: false }) // ป้องกันไม่ให้ส่ง password ออกไปทาง API โดยไม่ตั้งใจ
+  @Column({ select: false }) // ป้องกันไม่ให้ส่ง password ออกไปทาง API โดยไม่ตั้งใจ
   password: string;
 
-  @Column({ default: 1200 })
+  @Column({ name: 'elo_rating', nullable: true, default: 1200 })
   eloRating: number;
 
-  @Column({ default: 0 })
+  @Column({ name: 'penalty_flags', nullable: true, default: 0 })
   penaltyFlags: number;
 
   @Column({
@@ -46,9 +46,9 @@ export class User {
   })
   role: UserRole;
 
-  @CreateDateColumn()
+  @CreateDateColumn({ name: 'created_at' })
   createdAt: Date;
 
-  @UpdateDateColumn()
+  @UpdateDateColumn({ name: 'updated_at' })
   updatedAt: Date;
 }

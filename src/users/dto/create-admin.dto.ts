@@ -1,9 +1,7 @@
-import { IsEmail, IsString } from 'class-validator';
+import { IsEmail, IsNotEmpty, IsString } from 'class-validator';
 
 export class CreateAdminDto {
-  @IsString() first_name: string;
-  @IsString() last_name: string;
-  @IsString() username: string;
-  @IsString() password_hash: string;
-  @IsString() phone_number: string;
+  @IsString() @IsNotEmpty({ message: 'กรุณากรอกอีเมล' }) username: string;
+  @IsEmail() @IsNotEmpty({ message: 'กรุณากรอกอีเมล' }) email: string;
+  @IsString() @IsNotEmpty({ message: 'กรุณากรอกพาสเวิร์ด' }) password: string;
 }

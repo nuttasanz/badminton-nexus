@@ -12,8 +12,9 @@ export class UsersService {
     private readonly userRepository: Repository<User>, // 2. ตัวแปร: "เอามาเก็บไว้ในชื่อนี้"
   ) {}
 
-  createAdmin(createAdminDto: CreateAdminDto) {
-    return 'This action adds a new admin';
+  async createAdmin(createAdminDto: CreateAdminDto) {
+    const user = this.userRepository.create(createAdminDto);
+    await this.userRepository.save(user);
   }
 
   createUser(createUserDto: CreateUserDto) {
