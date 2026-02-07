@@ -6,6 +6,7 @@ import {
   UpdateDateColumn,
 } from 'typeorm';
 import { UserRole } from '../enum/user-role.enum';
+import { Exclude } from 'class-transformer';
 
 @Entity('users') // ต้องตรงชื่อ Table ใน DB
 export class User {
@@ -30,7 +31,8 @@ export class User {
   @Column({ name: 'phone_number', nullable: true })
   phoneNumber: string;
 
-  @Column({ select: false }) // ป้องกันไม่ให้ส่ง password ออกไปทาง API โดยไม่ตั้งใจ
+  @Exclude() // ป้องกันไม่ให้ส่ง password ออกไปทาง API โดยไม่ตั้งใจ
+  @Column()
   password: string;
 
   @Column({ name: 'elo_rating', nullable: true, default: 1200 })
