@@ -32,7 +32,7 @@ export class User {
   phoneNumber: string;
 
   @Exclude() // ป้องกันไม่ให้ส่ง password ออกไปทาง API โดยไม่ตั้งใจ
-  @Column()
+  @Column({ select: false })
   password: string;
 
   @Column({ name: 'elo_rating', nullable: true, default: 1200 })
