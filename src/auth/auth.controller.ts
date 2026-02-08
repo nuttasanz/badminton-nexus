@@ -11,7 +11,6 @@ export class AuthController {
   // signIn(@Body() signInDto: Record<string, any>) {
   //   return this.authService.signIn(signInDto.username, signInDto.password);
   // }
-  @HttpCode(HttpStatus.OK)
   @Post('createAdmin')
   createAdmin(@Body() createAdminDto: CreateAdminDto) {
     return this.authService.createAdmin(createAdminDto);
