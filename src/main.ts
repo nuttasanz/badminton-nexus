@@ -1,12 +1,19 @@
 /* eslint-disable */
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
-import { Logger, ValidationPipe, BadRequestException } from '@nestjs/common';
+import { ClassSerializerInterceptor, Logger } from '@nestjs/common';
+import { Reflector } from '@nestjs/core';
 import { CustomValidationPipe } from './common/pipes/custom-validation.pipe';
+import { TransformInterceptor } from './common/interceptors/transform.interceptor';
 
 async function bootstrap() {
   const logger = new Logger('Bootstrap');
   const app = await NestFactory.create(AppModule);
+  const reflector = app.get(Reflector);
+  app.useGlobalInterceptors(
+    new TransformInterceptor(reflector),
+    new ClassSerializerInterceptor(reflector),
+  );
   app.useGlobalPipes(new CustomValidationPipe());
   await app.listen(process.env.PORT ?? 3000);
   const url = await app.getUrl();
