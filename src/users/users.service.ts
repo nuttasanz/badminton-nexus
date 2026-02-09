@@ -1,15 +1,10 @@
 import { CreateAdminDto } from './dto/create-admin.dto';
-import {
-  Injectable,
-  ConflictException,
-  InternalServerErrorException,
-} from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { UserRole } from './enum/user-role.enum';
 import { CreateUserDto } from './dto/create-user.dto';
 import { InjectRepository } from '@nestjs/typeorm';
 import { User } from './entities/user.entity';
 import { Repository } from 'typeorm';
-import { DB_VALIDATION_MESSAGES } from 'src/common/constants/message.constant';
 
 @Injectable()
 export class UsersService {
@@ -24,16 +19,7 @@ export class UsersService {
       role: UserRole.ADMIN,
     });
 
-    try {
-      return await this.userRepository.save(user);
-    } catch (error: unknown) {
-      const errorCode = (error as { code: string }).code;
-      if (errorCode && DB_VALIDATION_MESSAGES[errorCode]) {
-        throw new ConflictException(DB_VALIDATION_MESSAGES[errorCode]);
-      }
-      console.error(error);
-      throw new InternalServerErrorException();
-    }
+    return await this.userRepository.save(user);
   }
 
   createUser(createUserDto: CreateUserDto) {
@@ -52,10 +38,21 @@ export class UsersService {
     });
   }
 
-  async findByUsername(username: string) {
-    return this.userRepository.findOne({
+  async findByUsername(username: string): Promise<User> {
+    const user = await this.userRepository.findOne({
       where: { username },
-      select: ['id', 'username', 'password'],
     });
+
+    if (!user) throw new NotFoundException('ไม่พบ username');
+    return user;
+  }
+
+  async findOneWithPassword(username: string): Promise<User | null> {
+    const user = await this.userRepository
+      .createQueryBuilder('user')
+      .where('user.username = :username', { username })
+      .addSelect('user.password')
+      .getOne();
+    return user;
   }
 }

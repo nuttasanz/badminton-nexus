@@ -17,7 +17,7 @@ import { ResponseMessage } from 'src/common/decorators/response-message.decorato
 export class UsersController {
   constructor(private readonly usersService: UsersService) {}
 
-  @Get()
+  @Get('/getByUsername')
   findByUsername(@Query('username') username: string) {
     return this.usersService.findByUsername(username);
   }
