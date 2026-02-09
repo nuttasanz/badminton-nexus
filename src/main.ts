@@ -5,11 +5,13 @@ import { ClassSerializerInterceptor, Logger } from '@nestjs/common';
 import { Reflector } from '@nestjs/core';
 import { CustomValidationPipe } from './common/pipes/custom-validation.pipe';
 import { TransformInterceptor } from './common/interceptors/transform.interceptor';
+import { TypeOrmExceptionFilter } from './common/filters/typeorm-exception.filter';
 
 async function bootstrap() {
   const logger = new Logger('Bootstrap');
   const app = await NestFactory.create(AppModule);
   const reflector = app.get(Reflector);
+  app.useGlobalFilters(new TypeOrmExceptionFilter());
   app.useGlobalInterceptors(
     new TransformInterceptor(reflector),
     new ClassSerializerInterceptor(reflector),
