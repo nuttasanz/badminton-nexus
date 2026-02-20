@@ -17,25 +17,9 @@ import { ResponseMessage } from 'src/common/decorators/response-message.decorato
 export class UsersController {
   constructor(private readonly usersService: UsersService) {}
 
-  @Get('/getByUsername')
-  findByUsername(@Query('username') username: string) {
-    return this.usersService.findByUsername(username);
-  }
-
-  @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.usersService.findById(id);
-  }
-
   @Post('/createAdmin')
   @ResponseMessage('Admin created successfully')
   createAdmin(@Body() createAdminDto: CreateAdminDto) {
     return this.usersService.createAdmin(createAdminDto);
-  }
-
-  @Post('/createUser')
-  @ResponseMessage('User created successfully')
-  createUser(@Body() createUserDto: CreateUserDto) {
-    return this.usersService.createUser(createUserDto);
   }
 }
